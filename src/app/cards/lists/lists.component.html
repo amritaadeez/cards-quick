@@ -1,0 +1,109 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="header-section">
+      <mat-card-title>Payment Methods</mat-card-title>
+      <div class="header-subtitle">Manage your saved cards securely</div>
+    </div>
+
+    <div class="wallet-card">
+      <div class="cards-container">
+        <div class="card-row" *ngFor="let card of cards; let index = index">
+          <mat-card class="credit-card" [ngClass]="getCardType(card.cardNumber)">
+            <div class="card-content">
+              <div class="card-header">
+                <div class="chip-icon"></div>
+                <mat-icon class="credit-card-icon">credit_card</mat-icon>
+              </div>
+              
+              <div class="card-number">
+                <h3>{{maskData(card.cardNumber)}}</h3>
+              </div>
+
+              <div class="card-holder">
+                <!-- <span class="label">CARD HOLDER</span> -->
+                <span class="value">{{card.cardHolder || 'Card Holder' | uppercase}}</span>
+              </div>
+              
+              <div class="card-footer">
+                <div class="card-details">
+                  <div class="expiry">
+                    <span class="label">EXPIRES</span>
+                    <span class="value">{{card.expMonth}}/{{card.expYear}}</span>
+                  </div>
+                  <div class="cvv">
+                    <span class="label">CVV</span>
+                    <div class="cvv-wrapper">
+                      <span class="value" [class.revealed]="card.showCvv">
+                        {{ card.showCvv ? card.cvv : '•••' }}
+                      </span>
+                      <button mat-icon-button class="cvv-toggle" 
+                              (click)="toggleCvv(card)"
+                              [matTooltip]="card.showCvv ? 'Hide CVV' : 'Show CVV'"
+                              [class.active]="card.showCvv">
+                        <mat-icon>{{ card.showCvv ? 'visibility_off' : 'visibility' }}</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-type-logo">
+                  <img [src]="getCardLogo(card.cardNumber)" [alt]="getCardType(card.cardNumber)">
+                </div>
+              </div>
+            </div>
+
+            <div class="card-actions">
+              <button mat-icon-button 
+                      class="primary-btn" 
+                      [class.is-primary]="card.isPrimary"
+                      (click)="makePrimary(card)" 
+                      matTooltip="{{card.isPrimary ? 'Primary Card' : 'Make Primary'}}"
+                      [disabled]="card.isPrimary">
+                <mat-icon>stars</mat-icon>
+              </button>
+              <button mat-icon-button 
+                      class="toggle-btn" 
+                      (click)="toggleCard(card)"
+                      [disabled]="card.isPrimary"
+                      matTooltip="{{card.isActive ? 'Disable Card' : 'Enable Card'}}">
+                <mat-icon>{{card.isActive ? 'toggle_on' : 'toggle_off'}}</mat-icon>
+              </button>
+              <button mat-icon-button 
+                      class="delete-btn" 
+                      (click)="actionDialog(card)"
+                      [disabled]="card.isPrimary"
+                      matTooltip="Delete Card">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-card>
+        </div>
+
+      </div>
+      <div class="empty-state" *ngIf="!cards || cards.length === 0">
+        <mat-icon>credit_card_off</mat-icon>
+        <h2>No Cards Available</h2>
+        <p>Add your first card to get started</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add this at the bottom of your template -->
+<button 
+  mat-fab 
+  class="floating-add-btn" 
+  (click)="actionDialog('ADD')"
+  matTooltip="Add New Card"
+  matTooltipPosition="left"
+  [matTooltipShowDelay]="500"
+  aria-label="Add new card">
+  <mat-icon>add</mat-icon>
+</button>
+
+
+
+
+
+
+
+

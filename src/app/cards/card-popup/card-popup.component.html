@@ -1,0 +1,312 @@
+<div class="popup-container mat-typography">
+  <div class="popup-header" *ngIf="data.text === 'ADD'">
+    <div class="header-content">
+      <h2>Add New Card</h2>
+      <button mat-icon-button class="close-btn" (click)="onNoClick()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="popup-content">
+    <!-- Add Card Form -->
+    <div class="add-card-form" *ngIf="data.text === 'ADD'">
+      <form
+        [formGroup]="cardDetailsForm"
+        (ngSubmit)="onSubmit(cardDetailsForm.value, types)"
+      >
+        <!-- Card Preview Section -->
+        <div
+          class="form-preview-card"
+          [ngClass]="getCardType(cardDetailsForm.get('creditCard')?.value)"
+        >
+          <div class="card-chip-container">
+            <div class="chip-icon"></div>
+            <div class="card-type-logo">
+              <img
+                [src]="getCardLogo(cardDetailsForm.get('creditCard')?.value)"
+                [alt]="getCardType(cardDetailsForm.get('creditCard')?.value)"
+                *ngIf="cardDetailsForm.get('creditCard')?.value"
+              />
+            </div>
+          </div>
+
+          <div class="card-number-preview">
+            {{
+              cardDetailsForm.get("creditCard")?.value || "•••• •••• •••• ••••"
+            }}
+          </div>
+
+          <div class="card-details-preview">
+            <div class="card-holder">
+              <div class="label">Card Holder</div>
+              <div class="value">
+                {{ cardDetailsForm.get("cardHolder")?.value || " NAME" }}
+              </div>
+            </div>
+            <div class="card-expires">
+              <div class="label">Expires</div>
+              <div class="value">
+                {{ cardDetailsForm.get("expMonth")?.value || "MM" }}/{{
+                  cardDetailsForm.get("expYear")?.value || "YY"
+                }}
+              </div>
+            </div>
+            <div class="card-cvv">
+              <div class="label">CVV</div>
+              <div class="value">•••</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Fields Section -->
+        <div class="form-fields">
+          <div class="form-group">
+            <label>Card Number</label>
+            <div class="input-wrapper">
+              <div class="input-with-icon">
+                <input
+                  formControlName="creditCard"
+                  type="tel"
+                  placeholder="1234 5678 9012 3456"
+                  (input)="checkCard($event)"
+                  (keydown)="onKeyDown($event)"
+                  [ngClass]="{
+                    'is-invalid':
+                      cardDetailsForm.get('creditCard')?.touched &&
+                      cardDetails.creditCard.errors,
+                    'is-valid':
+                      cardDetailsForm.get('creditCard')?.touched &&
+                      !cardDetails.creditCard.errors
+                  }"
+                  autocomplete="off"
+                  inputmode="numeric"
+                />
+                <div
+                  class="card-type-indicator"
+                  *ngIf="cardDetailsForm.get('creditCard')?.value"
+                >
+                  <img
+                    [src]="
+                      getCardLogo(cardDetailsForm.get('creditCard')?.value)
+                    "
+                    [alt]="
+                      getCardType(cardDetailsForm.get('creditCard')?.value)
+                    "
+                  />
+                </div>
+              </div>
+              <div
+                class="validation-message"
+                *ngIf="cardDetailsForm.get('creditCard')?.touched"
+              >
+                <span
+                  class="error-message"
+                  *ngIf="cardDetails.creditCard.errors"
+                >
+                  <mat-icon>error_outline</mat-icon>
+                </span>
+                <span
+                  class="success-message"
+                  *ngIf="!cardDetails.creditCard.errors"
+                >
+                  <mat-icon>check_circle_outline</mat-icon>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group expiry-month">
+              <label>Expiry Month</label>
+              <select
+                formControlName="expMonth"
+                class="form-control"
+                autocomplete="off"
+              >
+                <option value="">MM</option>
+                <option *ngFor="let m of months" [value]="m.month">
+                  {{ m.month }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group expiry-year">
+              <label>Expiry Year</label>
+              <select
+                formControlName="expYear"
+                class="form-control"
+                autocomplete="off"
+              >
+                <option value="">YYYY</option>
+                <option *ngFor="let y of years" [value]="y.year">
+                  {{ y.year }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group cvv">
+              <label>CVV</label>
+              <input
+                formControlName="cvv"
+                type="password"
+                placeholder="•••"
+                (keypress)="onlyNumbers($event)"
+                (paste)="onPaste($event)"
+                maxlength="4"
+                class="cvv-input"
+                autocomplete="off"
+                inputmode="numeric"
+              />
+            </div>
+          </div>
+
+          <div class="form-group cardholder-input">
+            <label>Card Holder Name</label>
+            <div class="input-wrapper">
+              <input
+                formControlName="cardHolder"
+                type="text"
+                placeholder="Card holder name"
+                [ngClass]="{
+                  'is-invalid': submitted && cardDetails.cardHolder.errors,
+                  'is-valid':
+                    cardDetailsForm.get('cardHolder')?.valid &&
+                    cardDetailsForm.get('cardHolder')?.value
+                }"
+                autocomplete="off"
+                maxlength="20"
+              />
+              <div
+                class="validation-message"
+                *ngIf="submitted && cardDetails.cardHolder.errors"
+              >
+                <span
+                  class="error-message"
+                  *ngIf="cardDetails.cardHolder.errors?.['required']"
+                >
+                  <mat-icon>error_outline</mat-icon>
+                  Please enter the card holder name
+                </span>
+                <span
+                  class="error-message"
+                  *ngIf="cardDetails.cardHolder.errors?.['pattern']"
+                >
+                  <mat-icon>error_outline</mat-icon>
+                  Only letters and spaces are allowed
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Regular desktop view buttons -->
+        <div class="form-actions desktop-actions">
+          <!-- Add Card Form Actions -->
+          <button
+            *ngIf="data.text === 'ADD'"
+            mat-raised-button
+            type="submit"
+            [disabled]="cardDetailsForm.invalid || spinner"
+            class="submit-btn"
+          >
+            <span>Add Card</span>
+          </button>
+
+          <!-- Delete Confirmation Actions -->
+          <div *ngIf="data.text !== 'ADD'" class="action-buttons">
+            <button mat-raised-button class="cancel-btn" (click)="onNoClick()">
+              Keep Card
+            </button>
+            <button
+              mat-raised-button
+              class="delete-btn"
+              (click)="deleteCard(data.text)"
+            >
+              <mat-icon>delete_outline</mat-icon>
+              Remove Card
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile footer with buttons -->
+        <div class="mobile-footer">
+          <!-- Add Card Form Actions -->
+          <button
+            *ngIf="data.text === 'ADD'"
+            mat-raised-button
+            type="submit"
+            [disabled]="cardDetailsForm.invalid || spinner"
+            class="submit-btn"
+          >
+            <span>Add Card</span>
+          </button>
+
+          <!-- Delete Confirmation Actions -->
+          <div *ngIf="data.text !== 'ADD'" class="action-buttons">
+            <button mat-raised-button class="cancel-btn" (click)="onNoClick()">
+              Keep Card
+            </button>
+            <button
+              mat-raised-button
+              class="delete-btn"
+              (click)="deleteCard(data.text)"
+            >
+              <mat-icon>delete_outline</mat-icon>
+              Remove Card
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Delete Card Confirmation -->
+    <div class="delete-confirmation" *ngIf="data.text !== 'ADD'">
+      <div class="confirmation-content">
+        <div class="warning-container">
+          <div class="warning-circle">
+            <mat-icon class="warning-icon">warning_amber</mat-icon>
+          </div>
+        </div>
+
+        <h3 class="confirmation-title">Remove Card</h3>
+        <p class="confirmation-message">
+          You're about to remove this card from your account.
+        </p>
+        <div class="card-preview" [ngClass]="getCardType(data.text.cardNumber)">
+          <div class="card-content">
+            <div class="card-header">
+              <div class="chip-icon"></div>
+              <img
+                class="card-logo"
+                [src]="getCardLogo(data.text.cardNumber)"
+                [alt]="getCardType(data.text.cardNumber)"
+              />
+            </div>
+            <div class="card-number">{{ maskData(data.text.cardNumber) }}</div>
+            <div class="card-footer">
+              <div class="card-holder">
+                {{ data.text.cardHolder || "CARD HOLDER" | uppercase }}
+              </div>
+              <div class="card-expires">
+                {{ data.text.expMonth }}/{{ data.text.expYear }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button mat-raised-button class="cancel-btn" (click)="onNoClick()">
+            Keep Card
+          </button>
+          <button
+            mat-raised-button
+            class="delete-btn"
+            (click)="deleteCard(data.text)"
+          >
+            <mat-icon>delete_outline</mat-icon>
+            Remove Card
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

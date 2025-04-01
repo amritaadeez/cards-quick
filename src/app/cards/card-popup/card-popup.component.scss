@@ -1,0 +1,822 @@
+.popup-container {
+  padding: 24px;
+  max-width: 500px;
+  width: 100%;
+  overflow-x: hidden; // Prevent horizontal scrollbar
+
+  @media (max-width: 576px) {
+    padding: 16px;
+  }
+
+  .popup-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    margin-bottom: 24px;
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 500;
+        line-height: 1.2;
+      }
+
+      .close-btn {
+        margin: -8px -8px -8px 8px;
+        color: rgba(0, 0, 0, 0.54);
+
+        &:hover {
+          color: rgba(0, 0, 0, 0.87);
+        }
+      }
+    }
+
+    &.delete-header {
+      border-bottom-color: rgba(244, 67, 54, 0.12);
+
+      h2 {
+        color: #f44336;
+      }
+    }
+  }
+
+  .popup-content {
+    max-height: calc(100vh - 200px); // Adjust as needed
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
+.form-preview-card {
+  background: linear-gradient(45deg, #393a49, #1a1a1d);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  color: white; // Making all text white
+
+  &.visa {
+    background: linear-gradient(135deg, #0033a0 0%, #0062cc 100%);
+  }
+  &.mastercard {
+    background: linear-gradient(135deg, #ff5f00 0%, #ff0000 100%);
+  }
+  &.amex {
+    background: linear-gradient(135deg, #108168 0%, #0a6148 100%);
+  }
+  &.discover {
+    background: linear-gradient(135deg, #ff6b00 0%, #ff9b00 100%);
+  }
+
+  .card-chip-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    padding: 16px 0;
+    position: relative;
+
+    .chip-icon {
+      width: 45px;
+      height: 35px;
+      background: linear-gradient(135deg, #bdb76b 0%, #c0b283 100%);
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+
+      // EMV chip design
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        height: 100%;
+        width: 1px;
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      // Metallic lines
+      background-image: linear-gradient(
+          90deg,
+          transparent 50%,
+          rgba(255, 255, 255, 0.1) 50%
+        ),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 50%, transparent 50%),
+        linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.1) 50%),
+        linear-gradient(0deg, rgba(255, 255, 255, 0.1) 50%, transparent 50%);
+      background-size: 8px 2px, 8px 2px, 2px 8px, 2px 8px;
+    }
+
+    .card-type-logo {
+      position: absolute;
+      top: -16px;
+      right: -10px;
+      img {
+        height: 50px;
+        width: auto;
+      }
+    }
+  }
+
+  .card-number-preview {
+    font-size: 22px;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    font-family: monospace;
+  }
+
+  .card-details-preview {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+
+    @media (max-width: 400px) {
+      grid-template-columns: 1fr 1fr;
+      .card-cvv {
+        display: none;
+      }
+    }
+  }
+}
+
+.form-fields {
+  padding: 1rem;
+  padding-bottom: 5rem;
+  .form-group {
+    margin-bottom: 20px;
+
+    input,
+    select {
+      width: 100%;
+      height: 48px;
+      padding: 8px 16px;
+      font-size: 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 30px !important;
+      background-color: #f8f9fa;
+      transition: all 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+
+      &:hover {
+        border-color: #b8b8b8;
+      }
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #424242;
+    }
+
+    .input-wrapper {
+      position: relative;
+
+      .input-with-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        input {
+          width: 100%;
+          height: 48px;
+          padding: 8px 16px;
+          padding-right: 60px; // Increased from 48px
+          font-size: 16px;
+          border: 2px solid #e0e0e0;
+          border-radius: 12px;
+          background-color: #f8f9fa;
+          transition: all 0.3s ease;
+
+          &:hover {
+            border-color: #bdbdbd;
+            background-color: #fff;
+          }
+
+          &:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(106, 27, 154, 0.1);
+          }
+
+          &.is-invalid {
+            border-color: #f44336;
+            background-color: #fff;
+          }
+
+          &.is-valid {
+            border-color: #4caf50;
+            background-color: #fff;
+          }
+        }
+
+        .card-type-indicator {
+          position: absolute;
+          right: 16px; // Increased from 12px
+          display: flex;
+          align-items: center;
+
+          img {
+            height: 32px; // Increased from 24px
+            width: auto;
+            padding: 4px; // Add some padding
+          }
+        }
+      }
+
+      .validation-message {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 8px;
+        right: 44px;
+
+        .error-message,
+        .success-message {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          mat-icon {
+            font-size: 16px;
+            height: 16px;
+            width: 16px;
+          }
+        }
+
+        .error-message {
+          color: #ff4444;
+        }
+
+        .success-message {
+          color: #00c851;
+        }
+      }
+    }
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+
+    @media (max-width: 576px) {
+      grid-template-columns: 1fr 1fr;
+
+      .cvv {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 400px) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  .cardholder-input {
+    input {
+      width: 100%;
+      height: 48px;
+      padding: 8px 16px;
+      font-size: 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      background-color: #f8f9fa;
+      transition: all 0.3s ease;
+      letter-spacing: 2px; // Increased letter spacing for better readability
+      max-width: 100%; // Ensure input doesn't overflow
+
+      // Ensure text doesn't overflow with the new spacing
+      &::placeholder {
+        letter-spacing: 1px;
+      }
+
+      &:hover {
+        border-color: #bdbdbd;
+        background-color: #fff;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        background-color: #fff;
+        box-shadow: 0 0 0 4px rgba(106, 27, 154, 0.1);
+      }
+    }
+  }
+
+  .cvv {
+    input {
+      width: 100%;
+      height: 48px;
+      padding: 8px 16px;
+      font-size: 18px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      background-color: #f8f9fa;
+      transition: all 0.3s ease;
+      letter-spacing: 4px;
+      font-family: monospace;
+
+      &:hover {
+        border-color: #bdbdbd;
+        background-color: #fff;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        background-color: #fff;
+        box-shadow: 0 0 0 4px rgba(106, 27, 154, 0.1);
+      }
+    }
+  }
+}
+
+.form-actions {
+  margin-top: 24px;
+
+  .submit-btn {
+    width: 100%;
+    height: 48px;
+    background: var(--primary-color);
+    color: white;
+    font-weight: 500;
+    border-radius: 24px;
+
+    &:disabled {
+      background: rgba(0, 0, 0, 0.12);
+      color: rgba(0, 0, 0, 0.38);
+    }
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16px;
+
+  button {
+    flex: 1;
+    height: 48px;
+    border-radius: 24px;
+    font-weight: 500;
+  }
+
+  .cancel-btn {
+    background: #f5f5f5;
+    color: rgba(0, 0, 0, 0.87);
+
+    &:hover {
+      background: #eeeeee;
+    }
+  }
+
+  .delete-btn {
+    background: #f44336;
+    color: white;
+
+    &:hover {
+      background: #d32f2f;
+    }
+
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+// Mobile footer
+.mobile-footer {
+  display: none; // Hidden by default
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: white;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+
+  .submit-btn {
+    width: 100%;
+    height: 48px;
+    background: var(--primary-color);
+    color: white;
+    font-weight: 500;
+    border-radius: 24px;
+
+    &:disabled {
+      background: rgba(0, 0, 0, 0.12);
+      color: rgba(0, 0, 0, 0.38);
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    button {
+      width: 100%;
+      height: 48px;
+      border-radius: 24px;
+      font-weight: 500;
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 576px) {
+  .desktop-actions {
+    display: none; // Hide desktop actions
+  }
+
+  .mobile-footer {
+    display: block; // Show mobile footer
+  }
+
+  // Adjust popup content to account for fixed footer
+  .popup-container {
+  
+    .popup-content {
+      max-height: calc(100vh - 125px); // Adjust for footer
+    }
+  }
+}
+
+// Animation for mobile footer
+@media (max-width: 576px) {
+  .mobile-footer {
+    animation: slideUpFooter 0.3s ease-out;
+  }
+}
+
+@keyframes slideUpFooter {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.error-snackbar {
+  background: #f44336;
+  color: white;
+}
+
+// Add this to prevent autofill background
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+select:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+.valid-card {
+  border-color: #28a745 !important;
+  background-color: #f8fff9 !important;
+}
+
+.invalid-card {
+  border-color: #dc3545 !important;
+  background-color: #fff8f8 !important;
+}
+
+input[formControlName="creditCard"] {
+  &.ng-touched.ng-invalid,
+  &.invalid-card {
+    border-color: #dc3545 !important;
+    background-color: #fff8f8 !important;
+  }
+
+  &.ng-touched.ng-valid,
+  &.valid-card {
+    border-color: #28a745 !important;
+    background-color: #f8fff9 !important;
+  }
+
+  &.ng-untouched,
+  &.ng-pristine {
+    border-color: #e0e0e0 !important;
+    background-color: #f8f9fa !important;
+  }
+}
+
+// Reset validation classes when form is pristine
+.ng-pristine {
+  input[formControlName="creditCard"] {
+    border-color: #e0e0e0 !important;
+    background-color: #f8f9fa !important;
+
+    &.valid-card,
+    &.invalid-card {
+      border-color: #e0e0e0 !important;
+      background-color: #f8f9fa !important;
+    }
+  }
+}
+
+.delete-confirmation {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+
+  .card-preview {
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 1.6;
+    border-radius: 16px;
+    padding: 0 1.5rem;
+    position: relative;
+    color: white;
+    transition: all 0.3s ease;
+    background: linear-gradient(
+      135deg,
+      #424242 0%,
+      #616161 100%
+    ); // Default fallback
+
+    // Specific gradients for each card type - matching lists.component.scss
+    &.visa {
+      background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+    }
+    &.mastercard {
+      background: linear-gradient(135deg, #eb001b 0%, #f79e1b 100%);
+    }
+    &.amex {
+      background: linear-gradient(135deg, #108168 0%, #0a6148 100%);
+    }
+    &.discover {
+      background: linear-gradient(135deg, #ff6b00 0%, #ff9b00 100%);
+    }
+    &.maestro {
+      background: linear-gradient(135deg, #0099df 0%, #006699 100%);
+    }
+    &.dinersclub {
+      background: linear-gradient(135deg, #004a97 0%, #0067a0 100%);
+    }
+    &.jcb {
+      background: linear-gradient(135deg, #019a59 0%, #006b42 100%);
+    }
+    &.unionpay {
+      background: linear-gradient(135deg, #e21836 0%, #00447c 100%);
+    }
+    &.dankort {
+      background: linear-gradient(135deg, #990000 0%, #cc0000 100%);
+    }
+
+    // Add subtle overlay pattern
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      border-radius: 16px;
+      pointer-events: none;
+    }
+
+    .card-content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 1;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .chip-icon {
+        width: 45px;
+        height: 35px;
+        background: linear-gradient(135deg, #bdb76b 0%, #c0b283 100%);
+        border-radius: 6px;
+        position: relative;
+        overflow: hidden;
+
+        &::before,
+        &::after {
+          content: "";
+          position: absolute;
+          background: rgba(255, 255, 255, 0.3);
+        }
+
+        &::before {
+          left: 0;
+          top: 50%;
+          width: 100%;
+          height: 1px;
+        }
+
+        &::after {
+          top: 0;
+          left: 50%;
+          height: 100%;
+          width: 1px;
+        }
+      }
+
+      .card-logo {
+        height: 40px;
+        object-fit: contain;
+      }
+    }
+
+    .card-number {
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      font-family: monospace;
+      text-align: center;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .card-holder,
+      .card-expires {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+      }
+    }
+  }
+
+  .confirmation-content {
+    text-align: center;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+
+    .warning-container {
+      .warning-circle {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: rgba(255, 152, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        animation: pulse 2s infinite;
+
+        .warning-icon {
+          font-size: 26px;
+          height: 26px;
+          width: 26px;
+          color: #ff9800;
+        }
+      }
+    }
+
+    .confirmation-title {
+      color: var(--text-primary);
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .confirmation-message {
+      color: var(--text-secondary);
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.5;
+      max-width: 320px;
+
+      .sub-message {
+        display: block;
+        margin-top: 2rem;
+        font-size: 0.875rem;
+        color: #f44336;
+        font-weight: 500;
+      }
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+      width: 100%;
+
+      .cancel-btn {
+        flex: 1;
+        border: 2px solid var(--text-secondary);
+        color: var(--text-secondary);
+        font-weight: 500;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        border-radius: 25px;
+        padding: 0.5rem 1.5rem;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.04);
+          border-color: var(--text-primary);
+          color: var(--text-primary);
+        }
+      }
+
+      .delete-btn {
+        flex: 1;
+        background: #f44336;
+        color: white;
+        font-weight: 500;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        border-radius: 25px;
+        padding: 0.5rem 1.5rem;
+
+        &:hover {
+          background: #d32f2f;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 8px rgba(244, 67, 54, 0.2);
+        }
+
+        mat-icon {
+          font-size: 20px;
+          height: 20px;
+          width: 20px;
+        }
+      }
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.4);
+    }
+    70% {
+      transform: scale(1.05);
+      box-shadow: 0 0 0 10px rgba(255, 152, 0, 0);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(255, 152, 0, 0);
+    }
+  }
+
+  // Responsive adjustments
+  @media (max-width: 400px) {
+    .confirmation-content {
+      .action-buttons {
+        flex-direction: column-reverse;
+
+        .cancel-btn,
+        .delete-btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

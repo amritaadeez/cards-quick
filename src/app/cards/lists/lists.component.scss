@@ -1,0 +1,874 @@
+.main-content {
+  padding: 2rem 1rem;
+  position: relative;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+
+  // Modern geometric pattern
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.03;
+    z-index: 0;
+    pointer-events: none;
+    background: 
+      linear-gradient(30deg, var(--primary-color) 12%, transparent 12.5%, transparent 87%, var(--primary-color) 87.5%, var(--primary-color)),
+      linear-gradient(150deg, var(--primary-color) 12%, transparent 12.5%, transparent 87%, var(--primary-color) 87.5%, var(--primary-color)),
+      linear-gradient(30deg, var(--primary-color) 12%, transparent 12.5%, transparent 87%, var(--primary-color) 87.5%, var(--primary-color)),
+      linear-gradient(150deg, var(--primary-color) 12%, transparent 12.5%, transparent 87%, var(--primary-color) 87.5%, var(--primary-color)),
+      linear-gradient(60deg, var(--secondary-color) 25%, transparent 25.5%, transparent 75%, var(--secondary-color) 75%, var(--secondary-color)),
+      linear-gradient(60deg, var(--secondary-color) 25%, transparent 25.5%, transparent 75%, var(--secondary-color) 75%, var(--secondary-color));
+    background-size: 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+  }
+
+  .container-fluid {
+    position: relative;
+    z-index: 1;
+    padding: 0 !important;
+  }
+
+  .header-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 576px) {
+      mat-card-title {
+        font-size: 1.5rem;
+
+        &:after {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+    }
+
+    mat-card-title {
+      color: var(--primary-color);
+      font-size: 2rem;
+      font-weight: 500;
+      margin: 0;
+      position: relative;
+    }
+
+    .header-subtitle {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-top: 0.75rem;
+    }
+  }
+
+  .wallet-card {
+    // background: linear-gradient(145deg, #f8f9fa, #ffffff);
+    // border-radius: 16px;
+    // box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 2rem  0;
+
+    @media (max-width: 768px) {
+      padding: 0;
+    }
+
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+
+      @media (max-width: 576px) {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+
+    .credit-card {
+      position: relative;
+      border-radius: 16px;
+      padding: 1.5rem;
+      color: white;
+      transition: all 0.3s ease;
+      background: linear-gradient(
+        135deg,
+        #1a1f71 0%,
+        #2639c5 100%
+      ); // Default background
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+
+        .delete-btn {
+          opacity: 1;
+        }
+      }
+
+      // Enhanced gradients for each card type
+      // Specific gradients for each card type - matching lists.component.scss
+      &.visa { 
+        background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+      }
+      &.mastercard { 
+        background: linear-gradient(135deg, #eb001b 0%, #f79e1b 100%);
+      }
+      &.amex { 
+        background: linear-gradient(135deg, #108168 0%, #0a6148 100%);
+      }
+      &.discover { 
+        background: linear-gradient(135deg, #ff6b00 0%, #ff9b00 100%);
+      }
+      &.maestro { 
+        background: linear-gradient(135deg, #0099df 0%, #006699 100%);
+      }
+      &.dinersclub { 
+        background: linear-gradient(135deg, #004a97 0%, #0067a0 100%);
+      }
+      &.jcb { 
+        background: linear-gradient(135deg, #019a59 0%, #006b42 100%);
+      }
+      &.unionpay { 
+        background: linear-gradient(135deg, #e21836 0%, #00447c 100%);
+      }
+      &.dankort { 
+        background: linear-gradient(135deg, #990000 0%, #cc0000 100%);
+      }
+
+      // Primary card styling
+      &.primary {
+        position: relative;
+        transform: scale(1.02);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        
+        // Theme-colored border effect
+        &::before {
+          content: '';
+          position: absolute;
+          inset: -2px;
+          border-radius: 18px;
+          padding: 4px;
+          background: linear-gradient(
+            135deg,
+            var(--primary-color) 0%,
+            var(--accent-color) 25%,
+            var(--primary-color) 50%,
+            var(--accent-color) 75%,
+            var(--primary-color) 100%
+          );
+          background-size: 200% 200%;
+          -webkit-mask: 
+            linear-gradient(#fff 0 0) content-box, 
+            linear-gradient(#fff 0 0);
+          mask: 
+            linear-gradient(#fff 0 0) content-box, 
+            linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          animation: borderRotate 4s linear infinite;
+        }
+
+        // Primary badge
+        .primary-badge {
+          position: absolute;
+          top: 1.2rem;
+          right: 1rem;
+          background: rgba(var(--primary-color-rgb), 0.15);
+          color: var(--primary-color);
+          padding: 0.4rem 1rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.1rem;
+          border-radius: 20px;
+          border: 2px solid rgba(var(--primary-color-rgb), 0.3);
+          backdrop-filter: blur(4px);
+          box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.2);
+          z-index: 2;
+          content: 'PRIMARY';
+        }
+
+        // Theme-colored inner glow
+        .inner-glow {
+          position: absolute;
+          inset: 0;
+          border-radius: 16px;
+          background: radial-gradient(
+            circle at 50% 50%,
+            rgba(var(--primary-color-rgb), 0.1),
+            transparent 70%
+          );
+          pointer-events: none;
+        }
+
+        // Enhanced hover effect
+        &:hover {
+          transform: translateY(-8px) scale(1.02);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        // Improved shimmer effect
+        .card-content::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 100%
+          );
+          animation: shimmer 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          z-index: 1;
+        }
+
+        // Theme-colored chip appearance
+        .chip-icon {
+          background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%) !important;
+          box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.3);
+          border: 1px solid rgba(var(--primary-color-rgb), 0.5);
+
+          &::before,
+          &::after {
+            background: rgba(255, 255, 255, 0.4);
+          }
+        }
+
+        // Enhanced text styles
+        .card-number h3 {
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+          font-weight: 600;
+          background: linear-gradient(to right, #fff, #f2f2f2);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+        }
+
+        .card-holder, 
+        .expiry-date {
+          font-weight: 500;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        // Theme-colored primary button
+        .primary-btn.is-primary {
+          background: rgba(var(--primary-color-rgb), 0.3);
+          border: 2px solid rgba(var(--primary-color-rgb), 0.5);
+          color: var(--primary-color);
+          box-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.3);
+
+          &:hover {
+            background: rgba(var(--primary-color-rgb), 0.4);
+          }
+        }
+      }
+
+      .card-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .chip-icon {
+          width: 45px;
+          height: 35px;
+          background: linear-gradient(135deg, #bdb76b 0%, #c0b283 100%);
+          border-radius: 6px;
+          position: relative;
+          overflow: hidden;
+
+          &::before,
+          &::after {
+            content: "";
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+          }
+
+          &::before {
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+          }
+
+          &::after {
+            top: 0;
+            left: 50%;
+            height: 100%;
+            width: 1px;
+          }
+        }
+
+        .credit-card-icon {
+          font-size: 28px;
+          opacity: 0.9;
+        }
+      }
+
+      .card-number h3 {
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+        margin: 0;
+        font-family: monospace;
+      }
+
+      .card-holder {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+
+        .label {
+          font-size: 0.7rem;
+          opacity: 0.8;
+          letter-spacing: 1px;
+        }
+
+        .value {
+          font-size: 1rem;
+          letter-spacing: 2px;
+        }
+      }
+
+      .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        .card-details {
+          display: flex;
+          gap: 1.5rem;
+
+          .expiry,
+          .cvv {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+
+            .label {
+              font-size: 0.7rem;
+              opacity: 0.8;
+              letter-spacing: 1px;
+            }
+
+            .value {
+              font-size: 1rem;
+              letter-spacing: 1px;
+            }
+          }
+        }
+
+        .card-type-logo {
+          img {
+            height: 40px;
+            width: auto;
+          }
+        }
+      }
+
+      .card-actions {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        display: flex;
+        gap: 0.5rem;
+        z-index: 10;
+
+        .primary-btn,
+        .toggle-btn,
+        .delete-btn {
+          width: 36px;
+          height: 36px;
+          line-height: 36px;
+          background: rgba(255, 255, 255, 0.15);
+          color: white;
+          opacity: 0; // Hidden by default
+          transition: all 0.3s ease;
+          backdrop-filter: blur(4px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+
+          &:hover:not([disabled]) {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          }
+
+          &[disabled] {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+
+          mat-icon {
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+          }
+        }
+
+        .primary-btn {
+          background: rgba(255, 255, 255, 0.15);
+          
+          mat-icon {
+            font-size: 20px;
+            width: 18px;
+            height: 24px;
+          }
+          // Exception: Primary button should always be visible when it's primary
+          &.is-primary {
+            opacity: 1;
+            background: rgba(255, 215, 0, 0.3);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            color: #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+
+            mat-icon {
+              animation: starShine 2s ease-in-out infinite;
+            }
+
+            &:hover {
+              transform: none;
+              background: rgba(255, 215, 0, 0.3);
+            }
+          }
+        }
+
+        .toggle-btn, .delete-btn {
+          background: rgba(255, 255, 255, 0.15);
+          
+          mat-icon {
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+          }
+        }
+
+        
+      }
+
+      // Show buttons on hover
+    
+
+      &:hover {
+        .card-actions {
+          .toggle-btn,
+          .primary-btn,
+          .delete-btn {
+            opacity: 1;
+          }
+        }
+      }
+
+      // Add styles for inactive cards
+      &.inactive {
+        filter: grayscale(0.8) opacity(0.7);
+        
+        &::before {
+          content: 'DISABLED';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) rotate(-35deg);
+          font-size: 2.5rem;
+          font-weight: bold;
+          letter-spacing: 0.5rem;
+          color: rgba(255, 255, 255, 0.15);
+          border: 0.5rem solid rgba(255, 255, 255, 0.15);
+          padding: 0.5rem 1rem;
+          text-transform: uppercase;
+          white-space: nowrap;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.2);
+          border-radius: inherit;
+          pointer-events: none;
+        }
+
+        .card-content {
+          opacity: 0.85;
+        }
+
+        .card-actions {
+          .toggle-btn {
+            opacity: 1;
+          }
+          
+          .delete-btn {
+            opacity: 0.5;
+          }
+        }
+
+        .cvv-toggle {
+          opacity: 0.5;
+          pointer-events: none;
+        }
+      }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-secondary);
+
+      mat-icon {
+        font-size: 4rem;
+        height: 4rem;
+        width: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        color: var(--text-secondary);
+      }
+    }
+  }
+}
+
+// Optional: Add subtle animation to the pattern
+@keyframes gradientShift {
+  0% {
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+  }
+  100% {
+    background-position: 80px 140px, 80px 140px, 120px 210px, 120px 210px, 80px 140px, 120px 210px;
+  }
+}
+
+.main-content::before {
+  animation: gradientShift 60s linear infinite;
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: purple;
+  border-radius: 4px;
+
+  &:hover {
+    background: darken(purple, 10%);
+  }
+}
+
+// Floating button styles
+.floating-add-btn {
+  position: fixed;
+  bottom: 32px; // Adjusted position
+  right: 32px; // Adjusted position
+  z-index: 1000;
+  background: linear-gradient(
+    135deg,
+    #6a1b9a,
+    #9c27b0
+  ); // Using your primary/secondary colors
+  color: white;
+  transition: all 0.3s ease;
+  width: 60px; // Slightly larger
+  height: 60px; // Slightly larger
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(106, 27, 154, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(106, 27, 154, 0.4);
+    background: linear-gradient(
+      135deg,
+      #7b1fa2,
+      #ab47bc
+    ); // Slightly lighter on hover
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(106, 27, 154, 0.3);
+  }
+
+  mat-icon {
+    font-size: 28px; // Slightly larger icon
+    width: 28px;
+    height: 28px;
+    color: white;
+  }
+
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    bottom: 16px;
+    right: 16px;
+    width: 50px;
+    height: 50px;
+
+    mat-icon {
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+    }
+  }
+}
+
+// Entrance animation
+.floating-add-btn {
+  animation: slideInFromBottom 0.3s ease-out;
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Subtle pulse effect
+.floating-add-btn::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.6;
+  z-index: -1;
+  animation: pulseEffect 2s infinite;
+}
+
+@keyframes pulseEffect {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+// Add this to your existing styles
+::ng-deep .mat-tooltip {
+  background: rgba(33, 33, 33, 0.95);
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cvv {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .cvv-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .value {
+      font-family: monospace;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+      
+      &.revealed {
+        color: #ffd700;
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+      }
+    }
+
+    .cvv-toggle {
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      padding: 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+
+      mat-icon {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+      }
+
+      &.active {
+        background: rgba(255, 215, 0, 0.2);
+        
+        mat-icon {
+          color: #ffd700;
+        }
+      }
+    }
+  }
+}
+
+// Add this to your existing card styles
+.credit-card {
+  &.inactive {
+    .cvv-toggle {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+}
+
+// // Shimmer animation
+@keyframes shimmer {
+  0% {
+    left: -40%;
+  }
+  50% {
+    left: 30%;
+  }
+  100% {
+    left: 10%;
+  }
+}
+
+// Ensure proper stacking in card list
+.card-list {
+  .credit-card.primary {
+    order: -1; // Makes primary card appear first
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .credit-card.primary {
+    transform: scale(1); // Reduce scale on mobile
+    
+    &:hover {
+      transform: translateY(-5px) scale(1);
+    }
+
+    &::after {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+    }
+  }
+}
+
+// Improve button visibility on different card backgrounds
+.credit-card {
+  &.visa .card-actions button,
+  &.mastercard .card-actions button,
+  &.amex .card-actions button,
+  &.discover .card-actions button {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  // Dark card backgrounds
+  &.visa,
+  &.mastercard {
+    .card-actions button {
+      background-color: rgba(255, 255, 255, 0.2);
+      &:hover:not([disabled]) {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+
+  // Light card backgrounds
+  &.amex,
+  &.discover {
+    .card-actions button {
+      background-color: rgba(0, 0, 0, 0.1);
+      &:hover:not([disabled]) {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+// Tooltip customization
+::ng-deep .mat-tooltip {
+  background: rgba(97, 97, 97, 0.9);
+  backdrop-filter: blur(4px);
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+// Animations
+@keyframes borderRotate {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 200%;
+  }
+}
+
+@keyframes starShine {
+  0% {
+    filter: drop-shadow(0 0 2px var(--primary-color));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px var(--primary-color));
+  }
+  100% {
+    filter: drop-shadow(0 0 2px var(--primary-color));
+  }
+}
