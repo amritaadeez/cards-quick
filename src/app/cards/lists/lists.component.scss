@@ -6,7 +6,7 @@
 
   // Modern geometric pattern
   &::before {
-    content: '';
+    content: "";
     position: fixed;
     top: 0;
     left: 0;
@@ -15,13 +15,54 @@
     opacity: 0.03;
     z-index: 0;
     pointer-events: none;
-    background: 
-      linear-gradient(30deg, var(--primary-color) 12%, transparent 12.5%, transparent 87%, var(--primary-color) 87.5%, var(--primary-color)),
-      linear-gradient(150deg, var(--primary-color) 12%, transparent 12.5%, transparent 87%, var(--primary-color) 87.5%, var(--primary-color)),
-      linear-gradient(30deg, var(--primary-color) 12%, transparent 12.5%, transparent 87%, var(--primary-color) 87.5%, var(--primary-color)),
-      linear-gradient(150deg, var(--primary-color) 12%, transparent 12.5%, transparent 87%, var(--primary-color) 87.5%, var(--primary-color)),
-      linear-gradient(60deg, var(--secondary-color) 25%, transparent 25.5%, transparent 75%, var(--secondary-color) 75%, var(--secondary-color)),
-      linear-gradient(60deg, var(--secondary-color) 25%, transparent 25.5%, transparent 75%, var(--secondary-color) 75%, var(--secondary-color));
+    background: linear-gradient(
+        30deg,
+        var(--primary-color) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        var(--primary-color) 87.5%,
+        var(--primary-color)
+      ),
+      linear-gradient(
+        150deg,
+        var(--primary-color) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        var(--primary-color) 87.5%,
+        var(--primary-color)
+      ),
+      linear-gradient(
+        30deg,
+        var(--primary-color) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        var(--primary-color) 87.5%,
+        var(--primary-color)
+      ),
+      linear-gradient(
+        150deg,
+        var(--primary-color) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        var(--primary-color) 87.5%,
+        var(--primary-color)
+      ),
+      linear-gradient(
+        60deg,
+        var(--secondary-color) 25%,
+        transparent 25.5%,
+        transparent 75%,
+        var(--secondary-color) 75%,
+        var(--secondary-color)
+      ),
+      linear-gradient(
+        60deg,
+        var(--secondary-color) 25%,
+        transparent 25.5%,
+        transparent 75%,
+        var(--secondary-color) 75%,
+        var(--secondary-color)
+      );
     background-size: 80px 140px;
     background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
   }
@@ -68,7 +109,7 @@
     // background: linear-gradient(145deg, #f8f9fa, #ffffff);
     // border-radius: 16px;
     // box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    padding: 2rem  0;
+    padding: 2rem 0;
 
     @media (max-width: 768px) {
       padding: 0;
@@ -108,31 +149,31 @@
 
       // Enhanced gradients for each card type
       // Specific gradients for each card type - matching lists.component.scss
-      &.visa { 
+      &.visa {
         background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
       }
-      &.mastercard { 
+      &.mastercard {
         background: linear-gradient(135deg, #eb001b 0%, #f79e1b 100%);
       }
-      &.amex { 
+      &.amex {
         background: linear-gradient(135deg, #108168 0%, #0a6148 100%);
       }
-      &.discover { 
+      &.discover {
         background: linear-gradient(135deg, #ff6b00 0%, #ff9b00 100%);
       }
-      &.maestro { 
+      &.maestro {
         background: linear-gradient(135deg, #0099df 0%, #006699 100%);
       }
-      &.dinersclub { 
+      &.dinersclub {
         background: linear-gradient(135deg, #004a97 0%, #0067a0 100%);
       }
-      &.jcb { 
+      &.jcb {
         background: linear-gradient(135deg, #019a59 0%, #006b42 100%);
       }
-      &.unionpay { 
+      &.unionpay {
         background: linear-gradient(135deg, #e21836 0%, #00447c 100%);
       }
-      &.dankort { 
+      &.dankort {
         background: linear-gradient(135deg, #990000 0%, #cc0000 100%);
       }
 
@@ -141,16 +182,18 @@
         position: relative;
         transform: scale(1.02);
         box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
-        
+        // make card a metalic look
+        filter: drop-shadow(0 0 10px rgba(var(--primary-color-rgb), 0.5))
+          drop-shadow(0 0 20px rgba(var(--primary-color-rgb), 0.3));
         // Theme-colored border effect
         &::before {
-          content: '';
+          content: "";
           position: absolute;
           inset: -2px;
           border-radius: 18px;
           padding: 4px;
           background: linear-gradient(
-            135deg,
+            185deg,
             var(--primary-color) 0%,
             var(--accent-color) 25%,
             var(--primary-color) 50%,
@@ -158,12 +201,10 @@
             var(--primary-color) 100%
           );
           background-size: 200% 200%;
-          -webkit-mask: 
-            linear-gradient(#fff 0 0) content-box, 
+          -webkit-mask: linear-gradient(#fff 0 0) content-box,
             linear-gradient(#fff 0 0);
-          mask: 
-            linear-gradient(#fff 0 0) content-box, 
-            linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          
           -webkit-mask-composite: xor;
           mask-composite: exclude;
           animation: borderRotate 4s linear infinite;
@@ -185,7 +226,7 @@
           backdrop-filter: blur(4px);
           box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.2);
           z-index: 2;
-          content: 'PRIMARY';
+          content: "PRIMARY";
         }
 
         // Theme-colored inner glow
@@ -209,7 +250,7 @@
 
         // Improved shimmer effect
         .card-content::before {
-          content: '';
+          content: "";
           position: absolute;
           top: 0;
           left: 0%;
@@ -227,7 +268,11 @@
 
         // Theme-colored chip appearance
         .chip-icon {
-          background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%) !important;
+          background: linear-gradient(
+            135deg,
+            var(--primary-color) 0%,
+            var(--accent-color) 100%
+          ) !important;
           box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.3);
           border: 1px solid rgba(var(--primary-color-rgb), 0.5);
 
@@ -238,16 +283,17 @@
         }
 
         // Enhanced text styles
-        .card-number h3 {
-          text-shadow: 0 2px 4px rgba(0, 0, 0, 1);
-          font-weight: 600;
+        .card-number h3,
+        .card-holder .value, .card-footer .value {
+          text-shadow: 0 2px 6px rgba(0, 0, 0, 1);
+          font-weight: 500;
           background: linear-gradient(to right, #fff, #f2f2f2);
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
         }
 
-        .card-holder, 
+        .card-holder,
         .expiry-date {
           font-weight: 500;
           text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -316,6 +362,10 @@
 
       .card-number h3 {
         font-size: 1.4rem;
+        
+        @media (max-width: 576px) {
+          font-size: 1.2rem;
+        }
         letter-spacing: 2px;
         margin: 0;
         font-family: monospace;
@@ -368,7 +418,7 @@
 
         .card-type-logo {
           img {
-            height: 40px;
+            height: 48px;
             width: auto;
           }
         }
@@ -415,7 +465,7 @@
 
         .primary-btn {
           background: rgba(255, 255, 255, 0.15);
-          
+
           mat-icon {
             font-size: 20px;
             width: 18px;
@@ -440,21 +490,19 @@
           }
         }
 
-        .toggle-btn, .delete-btn {
+        .toggle-btn,
+        .delete-btn {
           background: rgba(255, 255, 255, 0.15);
-          
+
           mat-icon {
             font-size: 24px;
             width: 24px;
             height: 24px;
           }
         }
-
-        
       }
 
       // Show buttons on hover
-    
 
       &:hover {
         .card-actions {
@@ -469,9 +517,9 @@
       // Add styles for inactive cards
       &.inactive {
         filter: grayscale(0.8) opacity(0.7);
-        
+
         &::before {
-          content: 'DISABLED';
+          content: "DISABLED";
           position: absolute;
           top: 50%;
           left: 50%;
@@ -489,7 +537,7 @@
         }
 
         &::after {
-          content: '';
+          content: "";
           position: absolute;
           top: 0;
           left: 0;
@@ -508,7 +556,7 @@
           .toggle-btn {
             opacity: 1;
           }
-          
+
           .delete-btn {
             opacity: 0.5;
           }
@@ -552,7 +600,8 @@
     background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
   }
   100% {
-    background-position: 80px 140px, 80px 140px, 120px 210px, 120px 210px, 80px 140px, 120px 210px;
+    background-position: 80px 140px, 80px 140px, 120px 210px, 120px 210px,
+      80px 140px, 120px 210px;
   }
 }
 
@@ -726,7 +775,7 @@
       font-size: 1.1rem;
       letter-spacing: 2px;
       transition: all 0.3s ease;
-      
+
       &.revealed {
         color: #ffd700;
         text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
@@ -754,7 +803,7 @@
 
       &.active {
         background: rgba(255, 215, 0, 0.2);
-        
+
         mat-icon {
           color: #ffd700;
         }
@@ -797,7 +846,7 @@
 @media (max-width: 768px) {
   .credit-card.primary {
     transform: scale(1); // Reduce scale on mobile
-    
+
     &:hover {
       transform: translateY(-5px) scale(1);
     }

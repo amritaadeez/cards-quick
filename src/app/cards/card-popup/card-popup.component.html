@@ -261,6 +261,11 @@
     <!-- Delete Card Confirmation -->
     <div class="delete-confirmation" *ngIf="data.text !== 'ADD'">
       <div class="confirmation-content">
+        <!-- Add close button at top right -->
+        <button mat-icon-button class="close-btn" (click)="onNoClick()">
+          <mat-icon>close</mat-icon>
+        </button>
+
         <div class="warning-container">
           <div class="warning-circle">
             <mat-icon class="warning-icon">warning_amber</mat-icon>
@@ -294,9 +299,7 @@
         </div>
 
         <div class="action-buttons">
-          <button mat-raised-button class="cancel-btn" (click)="onNoClick()">
-            Keep Card
-          </button>
+          <!-- Remove Keep Card button and keep only delete button -->
           <button
             mat-raised-button
             class="delete-btn"
@@ -310,3 +313,4 @@
     </div>
   </div>
 </div>
+
